@@ -1,0 +1,15 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Post</title>
+</head>
+<body>
+    <h1>Update Post</h1>
+    <form action="{%url 'post_update' post.pk %}"method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+    <a href="{% url 'post_detail' post.pk %}">Cancel</a>
+</body>
+</html>

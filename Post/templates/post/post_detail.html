@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <header>
+        <h1>{{ post.title }}</h1>
+        <p><small>Author: {{ post.author.username }}</small></p>
+        <p><small>Published on: {{ post.created_at|date:"Y-m-d H:i" }}</small></p>
+        <p><small>updated_at: {{ post.updated_at|date:"Y-m-d H:i" }}</small></p>
+    </header>
+    <main>
+        <article>
+            <h2>Message</h2>
+            <p>{{ post.message }}</p>
+        </article>
+        <hr>
+        <section>
+            <h3>Comments</h3>
+            {% if post.comments.exists %}
+                <ul>
+                    {% for comment in post.comments.all %}
+                        <li>{{ comment.author.username }}: {{ comment.content }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No comments yet. Be the first to comment!</p>
+            {% endif %}
+        </section>
+    </main>
+    <form action="{%url 'post_delete' post.pk%}"method='POST'>
+        {% csrf_token %}
+        <button type="submit" value="삭제">삭제</button>
+    </form>
+
+    <form action="{%url 'post_update' post.pk%}" method='get'>
+        {% csrf_token %}
+        <button type="submit" value="업데이트">수정</button>
+    </form>
+    <footer>
+        <a href="{% url 'post_list' %}">Back to Post List</a>
+    </footer>
+</body>
+</html>
