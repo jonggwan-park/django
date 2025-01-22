@@ -4,7 +4,7 @@ from django.conf import settings
 # 이 프로젝트 장고의 셋팅즈를 가져온다 이때 프로젝트 디렉토리에 있는 셋팅즈는 덮어쓰게 된다
 
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='posts')
     # ForeignKey로 1대 다 관계 형성 ForeignKey를 적는 쪽이 '다'
     #이므로 1명의 유저에 여러개의 포스트를 생성할 수 있다는 것임
     # 추가로 user가 삭제되었을 시 post도 삭제됨.
@@ -25,3 +25,5 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+class Comment(models.Model):
+    pass
